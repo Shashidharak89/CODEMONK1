@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Registration Form</title>
+  <style>
+    /* Simple, modern styling - works well on mobile and desktop */
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#7c3aed;
+      --muted:#94a3b8;
+      --text:#e6eef8;
+      --radius:12px;
+    }
+    * {box-sizing: border-box; font-family: Inter, system-ui, Arial, sans-serif}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      background: linear-gradient(180deg,#071029 0%, #071829 60%);
+      color:var(--text);
+    }
+
+    .card{
+      width:100%;
+      max-width:700px;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--radius);
+      padding:20px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.7);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    h1{
+      margin:0 0 12px 0;
+      font-size:1.35rem;
+      letter-spacing:0.2px;
+    }
+    p.lead{ margin:0 0 18px 0; color:var(--muted); font-size:0.95rem }
+
+    form {
+      display:grid;
+      gap:14px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    /* Full width row */
+    .full { grid-column: 1 / -1; }
+
+    label{
+      display:block;
+      font-size:0.85rem;
+      margin-bottom:6px;
+      color:var(--muted);
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select {
+      width:100%;
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      color:var(--text);
+      outline:none;
+      font-size:0.95rem;
+    }
+
+    textarea { min-height:92px; resize:vertical; }
+
+    .gender-row {
+      display:flex;
+      gap:12px;
+      align-items:center;
+      padding:8px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.01);
+    }
+
+    .gender-row label{ margin:0; color:var(--text); font-size:0.95rem; display:flex; gap:6px; align-items:center; }
+
+    .actions {
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      align-items:center;
+      margin-top:6px;
+      grid-column: 1 / -1;
+    }
+
+    button {
+      padding:10px 14px;
+      border-radius:10px;
+      border:0;
+      cursor:pointer;
+      font-weight:600;
+      font-size:0.95rem;
+    }
+
+    button.primary {
+      background: linear-gradient(90deg,var(--accent), #4f46e5);
+      color:white;
+      box-shadow: 0 6px 18px rgba(124,58,237,0.18);
+    }
+
+    button.ghost {
+      background:transparent;
+      color:var(--muted);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .note { font-size:0.85rem; color:var(--muted); }
+
+    /* Confirmation preview */
+    .preview {
+      margin-top:14px;
+      border-radius:10px;
+      padding:12px;
+      background: rgba(255,255,255,0.01);
+      border:1px dashed rgba(255,255,255,0.03);
+      font-size:0.95rem;
+      color:var(--text);
+    }
+
+    /* Responsive */
+    @media (max-width:640px){
+      form { grid-template-columns: 1fr; }
+      .actions { justify-content: stretch; flex-direction:column-reverse; }
+      button { width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="main" aria-labelledby="regHeading">
+    <h1 id="regHeading">Registration Form</h1>
+    <p class="lead">Please fill in your details. Fields marked with <span aria-hidden="true">*</span> are required.</p>
+
+    <form id="regForm" novalidate>
+      <!-- Name -->
+      <div class="full">
+        <label for="name">Full name <span aria-hidden="true">*</span></label>
+        <input id="name" name="name" type="text" placeholder="e.g. Priya Sharma" required aria-required="true" minlength="2" />
+      </div>
+
+      <!-- Address -->
+      <div class="full">
+        <label for="address">Address <span aria-hidden="true">*</span></label>
+        <textarea id="address" name="address" placeholder="Street, City, State, PIN" required aria-required="true"></textarea>
+      </div>
+
+      <!-- Age -->
+      <div>
+        <label for="age">Age <span aria-hidden="true">*</span></label>
+        <input id="age" name="age" type="number" placeholder="e.g. 21" required min="1" max="120" />
+      </div>
+
+      <!-- Gender -->
+      <div>
+        <label>Gender <span aria-hidden="true">*</span></label>
+        <div class="gender-row" role="radiogroup" aria-labelledby="genderLabel">
+          <label><input type="radio" name="gender" value="Male" required /> Male</label>
+          <label><input type="radio" name="gender" value="Female" /> Female</label>
+          <label><input type="radio" name="gender" value="Other" /> Other</label>
+        </div>
+      </div>
+
+      <!-- Optional: prefer not to say -->
+      <div class="full">
+        <label for="otherGender">If Other, please specify (optional)</label>
+        <input id="otherGender" name="otherGender" type="text" placeholder="Your gender (optional)" />
+      </div>
+
+      <div class="actions">
+        <div class="note">We only store these details for registration purposes.</div>
+        <div style="display:flex; gap:10px;">
+          <button type="button" class="ghost" id="resetBtn">Reset</button>
+          <button type="submit" class="primary" id="submitBtn">Submit</button>
+        </div>
+      </div>
+
+      <!-- Preview area (hidden until submit) -->
+      <div id="preview" class="preview" style="display:none;" aria-live="polite"></div>
+    </form>
+  </main>
+
+  <script>
+    // Small JS to validate and show a confirmation preview instead of a real submit.
+    const form = document.getElementById('regForm');
+    const preview = document.getElementById('preview');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // helper: show error messages using browser validity UI where possible
+    function showValidation() {
+      // If invalid, find first invalid element and focus it (browser will show tooltip)
+      const firstInvalid = form.querySelector(':invalid');
+      if (firstInvalid) {
+        firstInvalid.reportValidity();
+        firstInvalid.focus();
+        return false;
+      }
+      return true;
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // prevent actual form submit for demo
+      if (!showValidation()) return;
+
+      // collect form data
+      const fd = new FormData(form);
+      const data = {
+        name: fd.get('name')?.trim(),
+        address: fd.get('address')?.trim(),
+        age: fd.get('age')?.trim(),
+        gender: fd.get('gender') || 'Not specified',
+        other: fd.get('otherGender')?.trim() || ''
+      };
+
+      // Build preview HTML
+      preview.innerHTML = `
+        <strong>Confirmation</strong>
+        <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
+        <p><strong>Address:</strong> ${escapeHtml(data.address).replace(/\n/g,'<br>')}</p>
+        <p><strong>Age:</strong> ${escapeHtml(data.age)}</p>
+        <p><strong>Gender:</strong> ${escapeHtml(data.gender)} ${data.other ? '(' + escapeHtml(data.other) + ')' : ''}</p>
+        <p class="note">This is a preview. In a real app this data would be sent to the server.</p>
+      `;
+      preview.style.display = 'block';
+      preview.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+
+    resetBtn.addEventListener('click', () => {
+      form.reset();
+      preview.style.display = 'none';
+      preview.innerHTML = '';
+    });
+
+    // small escape helper to avoid simple injection in preview
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+  </script>
+</body>
+</html>
